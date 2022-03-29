@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY
+SECRET_KEY = 'django-insecure-x4h@o1r%x0ub93_2g_=@i3kwh344=aw4&b34w44p10a_hx+luc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,7 +78,16 @@ WSGI_APPLICATION = 'bookshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bookshop',
+        'USER': 'macbook',
+        'PASSWORD': '1',
+        'HOST': 'localhost',
+        'PORT': 5432
+    }
+}
 
 
 # Password validation
@@ -122,4 +131,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from .local_settings import *
+
