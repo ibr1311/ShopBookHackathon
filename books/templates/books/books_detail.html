@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ book.title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<h1 class="mt-5">
+    {{ book.title }}
+</h1>
+<p>{{ book.description }}</p>
+{% endblock %}
