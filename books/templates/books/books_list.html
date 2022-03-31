@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 
 {% block title %}
@@ -10,12 +10,17 @@ Book Shop
 <h1 class="mb-5">Books: </h1>
 {% for book in books %}
 <div class="card mb-4" style="width: 18rem;">
-  <img src="" class="card-img-top" alt="...">
+  <img style="width: 300px; height: 500px" src="{{ book.image.url }}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{ book.title }}</h5>
-    <p class="card-text">{{ book.description|truncatewords:15 }}</p>
-    <a href="" class="btn btn-primary">Open</a>
+    <p class="card-text">{{ book.description|truncatewords:30 }}</p>
+    <a href="{% url 'books_detail_url' book.id %}" class="btn btn-primary">Open</a>
   </div>
 </div>
 {% endfor %}
+{% endblock %}
+
+{% block admin-panel %}
+
+    <a href="{% url 'create_book_url' %}" class="btn btn-light">Create</a>
 {% endblock %}

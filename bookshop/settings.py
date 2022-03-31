@@ -83,8 +83,8 @@ WSGI_APPLICATION = 'bookshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bookshop2',
-        'USER': 'meerim',
+        'NAME': 'bookhackathon',
+        'USER': 'macbook',
         'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': 5432
@@ -132,6 +132,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

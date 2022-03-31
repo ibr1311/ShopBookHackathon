@@ -4,8 +4,7 @@ from django.shortcuts import reverse
 class Author(models.Model):
     name = models.CharField(max_length=55)
     last_name = models.CharField(max_length=85, blank=True)
-    date_of_birth = models.DateField()
-    image = models.ImageField(blank=True, null=True, upload_to='authors')
+
     def __str__(self):
         return f'{self.name} {self.last_name}'
 

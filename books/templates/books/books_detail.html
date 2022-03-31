@@ -1,12 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'base.html'%}
+{% load static %}
 
 {% block title %}
-    {{ book.title }} - {{ block.super }}
+{{ book.title }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
 <h1 class="mt-5">
-    {{ book.title }}
+  {{ book.title }}
 </h1>
-<p>{{ book.description }}</p>
+  {{ book.description }}
+{% endblock %}
+
+{% block admin-panel %}
+
+    <a href="" class="btn btn-light">Create</a>
+    <a href="" class="btn btn-light">Edit</a>
+    <a href="" class="btn btn-danger">Delete</a>
 {% endblock %}
