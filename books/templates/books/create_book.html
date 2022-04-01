@@ -6,7 +6,7 @@
     </h3>
 
 <div class="container m-5">
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" name="Submit"> Add a book

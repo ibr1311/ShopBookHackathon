@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
-{% block title %}Редактирование продукта{% endblock title %}
-{% block body %}
-    <h1>Edit a book</h1>
-    <form method="post" enctype="multipart/form-data">
+
+{% block content %}
+    <h3>
+        Edit a book
+    </h3>
+
+<div class="container m-5">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <input type="submit" name="Submit"> Edit a book
+
     </form>
-{% endblock body %}
+
+</div>
+{% endblock%}

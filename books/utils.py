@@ -18,3 +18,6 @@ class ObjectCreateMixin:
             new_obj = bound_form.save()
             return redirect(new_obj)
         return render(request, self.template, context={'form': bound_form})
+
+
+

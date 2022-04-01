@@ -33,3 +33,21 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+
+    class Meta:
+        ordering = ['title']
+
+
+class Comment(models.Model):
+    book = models.ForeignKey(Book, related_name="comments", on_delete=models.CASCADE)
+    commenter_name = models.CharField(max_length=200)
+    comment_body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.book.name, self.commenter_name)

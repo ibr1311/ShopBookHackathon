@@ -2,25 +2,54 @@
 {% load static %}
 
 
+
 {% block title %}
 Book Shop
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-5">Books: </h1>
-{% for book in books %}
-<div class="card mb-4" style="width: 18rem;">
-  <img style="width: 300px; height: 500px" src="{{ book.image.url }}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{ book.title }}</h5>
-    <p class="card-text">{{ book.description|truncatewords:30 }}</p>
-    <a href="{% url 'books_detail_url' book.id %}" class="btn btn-primary">Open</a>
-  </div>
-</div>
-{% endfor %}
+    <div class="container">
+
+
+        <div class="row justify-content-center m-2">
+
+            {% if books %}
+
+            {% for book in books %}
+
+                <div class="col-md-4">
+                    <div class="card m-3 p-2" style="width: 13rem; height: 23rem; box-shadow: 4px 4px #b4c2de; border-radius: 25px 15px;">
+                          {% if book.image %}
+                        <img src="{{ book.image.url }}" style="height: 250px; width: 130px;"  class="card-img-top" alt="{{ book.title }}">
+                          {% endif %}
+                        <div class="card-body">
+                            <h4 style="font-size: 14px;" class="card-title mt-1"><a href="{% url 'books_detail_url' book.id %}">{{ book.title }}</a></h4>
+                            <h3 style="color: rgb(16, 52, 107)" class="card-subtitle mt-1">${{ book.price }}</h3>
+                            <hr>
+                            <p style="font-size: 13px;" class="btn btn-light"><b>{{ book.author.name }} {{ book.author.last_name }}</b></p>
+                        </div>
+        </div>
+    </div>
+               </div>
+    </div>
+
+            {% endfor %}
+
+            {% else %}
+                 <p>No Books </p>
+            {% endif %}
+
+    </li>
+    <li class="page-item"><a class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+    <li class="page-item active" aria-current="page">
+    </li>
+      {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </li>
+  </ul>
+</nav>
+
 {% endblock %}
 
-{% block admin-panel %}
-
-    <a href="{% url 'create_book_url' %}" class="btn btn-light">Create</a>
-{% endblock %}

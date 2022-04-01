@@ -1,38 +1,111 @@
+from django.core import paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, ListView
 
-from books.models import Book, Genre, Author
-from .forms import BookForm
-from .utils import ObjectCreateMixin
+import books
+from books.models import Book, Genre, Author, Comment
+from .forms import BookForm, CommentForm
+from datetime import datetime
 
 
 def genre_view(request):
     genres = Genre.objects.all()
+    paginate_by = 3
     return render(request, 'books/main_page.html', {'genres': genres})
 def books_list(request, slug):
     books = Book.objects.filter(genre__slug=slug)
-    return render(request, 'books/books_list.html', {'books': books})
+    paginator = Paginator(books, 3)
+    page = request.GET.get('page')
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+    # Если страница не является целым числом, поставим первую страницу
+        page_obj = paginator.page(1)
+    except EmptyPage:
+    # Если страница больше максимальной, доставить последнюю страницу результатов
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request, 'books/books_list.html', {'books': books,
+                                                     'page_obj': page_obj})
+
 
 
 class BooksDetailView(DetailView):
     queryset = Book.objects.all()
     template_name = 'books/books_detail.html'
 
-class CreateBookView(ObjectCreateMixin, View):
-    model_form = BookForm
-    template = 'books/create_book.html'
-    raise_exception = True
+def create_book(request):
+    form = BookForm()
 
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('main_page_url'))
 
-class UpdateBookView(UpdateView):
-    queryset = Book.objects.all()
-    template_name = 'books/update_book.html'
-    form_class = BookForm
-    def get_success_url(self):
-        book_id = self.kwargs.get('pk')
-        return redirect(reverse_lazy('books_detail_url'))
+    else:
+        form = BookForm()
+    context = {
+        "form": form
+    }
+
+    return render(request, 'books/create_book.html', context)
+
+def update_book(request, pk):
+    book = Book.objects.get(id=pk)
+    form = BookForm(instance=book)
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('books_detail_url', args=[book.id]))
+
+    context = {
+        'form': form
+    }
+    return render(request, 'books/update_book.html', context)
+
+def delete_book(request, pk):
+    book = Book.objects.get(id=pk)
+    book.delete()
+    return redirect(reverse('main_page_url'))
+
+def add_comment(request, pk):
+    book = Book.objects.get(id=pk)
+
+    form = CommentForm(instance=book)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=book)
+        if form.is_valid():
+            name = request.user.username
+            body = form.cleaned_data['comment_body']
+            c = Comment(book=book, commenter_name=name, comment_body=body, date_added=datetime.now())
+            c.save()
+            return redirect(reverse('books_detail_url', args=[book.id]))
+        else:
+            print('form is invalid')
+    else:
+        form = CommentForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'books/add_comment.html', context)
+
+def delete_comment(request, pk):
+    comment = Comment.objects.filter(book=pk).last()
+    book_id = comment.book.id
+    comment.delete()
+    return redirect(reverse('books_detail_url', args=[book_id]))
+
+class AboutListView(ListView):
+    model = Book
+    paginate_by = 3
+    template_name = 'books/about.html'
 
 
 

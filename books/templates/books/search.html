@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+  {% if query %}
+    <h1>Books containing "{{ query }}"</h1>
+    <h3>
+      {% with results.count as total_results %}
+        Found {{ total_results }} result {{ total_results|pluralize }}
+      {% endwith %}
+    </h3>
+  {% for book in results %}
+  <h4><a href="{% url 'books_detail_url' book.id %}">{{ book.title }}</a></h4>
+    {{ book.description|truncatewords:5 }}
+  {% empty %}
+  <p>There are no results for your query.</p>
+  {% endfor %}
+
+  {% endif %}
+{% endblock %}
+
+

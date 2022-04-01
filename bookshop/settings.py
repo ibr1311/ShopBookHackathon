@@ -83,8 +83,8 @@ WSGI_APPLICATION = 'bookshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bookhackathon',
-        'USER': 'macbook',
+        'NAME': 'bookshop2',
+        'USER': 'meerim',
         'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': 5432
@@ -134,7 +134,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -150,3 +150,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'toktobekov7595@gmail.com'
 EMAIL_HOST_PASSWORD = '460622123Beka'
+
+
+CART_SESSION_ID = 'cart'

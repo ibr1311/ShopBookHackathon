@@ -1,20 +1,78 @@
 {% extends 'base.html'%}
 {% load static %}
 
+
 {% block title %}
 {{ book.title }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
-<h1 class="mt-5">
-  {{ book.title }}
-</h1>
-  {{ book.description }}
+<div class="container">
+
+  <div class="row justify-content-center">
+      <div class="col-md-8">
+           {% for genre in genres %}
+        <a href="{% url 'books_list_url' genre.slug %}" class="btn btn-primary mt-2">Back</a>
+          {% endfor %}
+          <div class="card m-5 p-2" style="width: 25rem;">
+            {% if book.image %}
+              <img style="width: 300px; height: 500px" src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
+              {% endif %}
+              <div class="card-body">
+                  <h5 class="card-title m-1"><b>Title:</b> {{ book.title }}</h5>
+                  <h4 class="card-subtitle m-1"><b>Price:</b>{{ book.price }} som</h4>
+                  <p style="font-size: 14px;" class="btn btn-warning m-1 p-1">{{ book.author.name }} {{  book.author.last_name }}</p>
+                  <hr>
+                  <p style="font-size: 15px;" class="card-text mt-1">Description: {{ book.description }}</p>
+
+              </div>
+          </div>
+      </div>
+
+
+
+<div class="col-md-4">
+         <div style="margin: 5px padding:2px">
+            Add Comments ({{ num_comments }})
+            <br>
+            <hr>
+
+            {% if not book.comments.all %}
+
+                <p>Not comments added yet...</p>
+               <p><a class="btn btn-primary" href="{% url 'add_comment_url' book.id %}">  Add Comment </a></p>
+
+            {% else %}
+
+                {% for comment in book.comments.all %}
+
+                    <h5><strong>{{ comment.commenter_name }}</strong></h5>
+                    <p>{{ comment.comment_body }}</p>
+                    <p><small>{{ comment.date_added }}</small></p>
+
+                    {% if request.user.username == comment.commenter_name %}
+
+                        <p><a class="btn btn-primary" href="{% url 'add_comment_url' book.id %}">  Add Comment </a></p>
+                        <p><a class="btn btn-danger" href="{% url 'delete_comment_url' book.id %}">  Delete Comment </a></p>
+
+
+                    {% endif %}
+
+
+
+                {% endfor %}
+
+            {% endif %}
+</div>
+      </div>
+  </div>
+
+</div>
+
 {% endblock %}
 
 {% block admin-panel %}
 
-    <a href="" class="btn btn-light">Create</a>
-    <a href="" class="btn btn-light">Edit</a>
-    <a href="" class="btn btn-danger">Delete</a>
+    <a href="{% url 'update_book_url' book.id %}" class="btn btn-primary m-1">Edit</a>
+    <a href="{% url 'delete_book_url' book.id %}" class="btn btn-danger m-1">Delete</a>
 {% endblock %}
