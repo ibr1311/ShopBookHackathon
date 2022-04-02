@@ -2,14 +2,18 @@
 {% load static %}
 
 {% block content %}
-<img style="width: 90%; height: 90%" src="{% static 'img/bookshop.jpeg'%}" class="img-fluid" alt="...">
+<center>
+<img style="width: 70%; height: 70%" src="{% static 'img/book.jpeg'%}" class="img-fluid" alt="...">
+  </center>
 
 
 <div style="margin-top:30px; margin-bottom: 30px;" class="container px-4">
   <div class="row gx-5">
     {% for genre in genres %}
-    <div class="col-6">
-      <div class="p-3 border bg-light"><a href="{% url 'books_list_url' genre.slug %}">{{  genre.name  }}</a></div>
+    <div class="col-6" style="margin-bottom: 20px">
+     <center>
+      <div class="p-3 border bg-light" style="width: 23rem ;box-shadow: 4px 4px #f19568; border-radius: 25px 15px"><center><a href="{% url 'books_list_url' genre.slug %}" style="font-family: 'Comic Sans MS' ;color: #013220">{{  genre.name  }}</a></center></div>
+       </center>
     </div>
     {% endfor %}
     </div>

@@ -71,5 +71,3 @@ class User(AbstractBaseUser):
             "toktobekov7595@gmail.com",
             [self.email]
         )
-
-# Create your models here.

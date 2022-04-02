@@ -14,15 +14,21 @@
            {% for genre in genres %}
         <a href="{% url 'books_list_url' genre.slug %}" class="btn btn-primary mt-2">Back</a>
           {% endfor %}
-          <div class="card m-5 p-2" style="width: 25rem;">
+          <div class="card m-5 p-2" style="width: 30rem;">
             {% if book.image %}
-              <img style="width: 300px; height: 500px" src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
+              <center><img style="width: 300px; height: 500px" src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}"></center>
               {% endif %}
               <div class="card-body">
                   <h5 class="card-title m-1"><b>Title:</b> {{ book.title }}</h5>
-                  <h4 class="card-subtitle m-1"><b>Price:</b>{{ book.price }} som</h4>
+                  <h4 class="card-subtitle m-1"><b>Price: </b> ${{ book.price }}</h4>
                   <p style="font-size: 14px;" class="btn btn-warning m-1 p-1">{{ book.author.name }} {{  book.author.last_name }}</p>
-                  <hr>
+                  <form action="{% url 'order:cart_add_url' book.id %}" method="post">
+                      {% csrf_token %}
+                      {{ cart_book_form }}
+
+                      <input type="submit" value="Add to cart">
+
+                  </form>
                   <p style="font-size: 15px;" class="card-text mt-1">Description: {{ book.description }}</p>
 
               </div>
@@ -31,8 +37,8 @@
 
 
 
-<div class="col-md-4">
-         <div style="margin: 5px padding:2px">
+<div class="col-md-4" style="margin-top: 45px">
+         <div style="margin: 5px; padding:2px">
             Add Comments ({{ num_comments }})
             <br>
             <hr>
@@ -45,6 +51,7 @@
             {% else %}
 
                 {% for comment in book.comments.all %}
+                    <img style="width: 80px; height: 80px" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg">
 
                     <h5><strong>{{ comment.commenter_name }}</strong></h5>
                     <p>{{ comment.comment_body }}</p>
@@ -68,6 +75,7 @@
   </div>
 
 </div>
+
 
 {% endblock %}
 

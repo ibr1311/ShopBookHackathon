@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
+from account.models import User
 
 class Author(models.Model):
     name = models.CharField(max_length=55)
@@ -51,3 +52,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.book.name, self.commenter_name)
+
+

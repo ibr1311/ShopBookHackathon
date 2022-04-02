@@ -1,5 +1,6 @@
 from django.core import paginator
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -9,6 +10,7 @@ import books
 from books.models import Book, Genre, Author, Comment
 from .forms import BookForm, CommentForm
 from datetime import datetime
+from order.forms import CartAddBookForm
 
 
 def genre_view(request):
@@ -17,24 +19,33 @@ def genre_view(request):
     return render(request, 'books/main_page.html', {'genres': genres})
 def books_list(request, slug):
     books = Book.objects.filter(genre__slug=slug)
-    paginator = Paginator(books, 3)
-    page = request.GET.get('page')
+    page_num = request.GET.get("page")
+    paginator = Paginator(books, 2)
     try:
-        page_obj = paginator.page(page)
+        books = paginator.page(page_num)
     except PageNotAnInteger:
-    # Если страница не является целым числом, поставим первую страницу
-        page_obj = paginator.page(1)
+        books = paginator.page(1)
     except EmptyPage:
-    # Если страница больше максимальной, доставить последнюю страницу результатов
-        page_obj = paginator.page(paginator.num_pages)
-    return render(request, 'books/books_list.html', {'books': books,
-                                                     'page_obj': page_obj})
+        books = paginator.page(paginator.num_pages)
+
+
+    context = {
+        'books': books,
+
+    }
+
+    return render(request, 'books/books_list.html', context)
+
 
 
 
 class BooksDetailView(DetailView):
     queryset = Book.objects.all()
+    cart_book_form = CartAddBookForm()
     template_name = 'books/books_detail.html'
+
+
+
 
 def create_book(request):
     form = BookForm()
@@ -106,6 +117,8 @@ class AboutListView(ListView):
     model = Book
     paginate_by = 3
     template_name = 'books/about.html'
+
+
 
 
 

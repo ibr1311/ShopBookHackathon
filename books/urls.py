@@ -11,4 +11,5 @@ urlpatterns = [
     path('/<int:pk>/add_comment/', add_comment, name='add_comment_url'),
     path('/<int:pk>/delete_comment/', delete_comment, name='delete_comment_url'),
 
+
 ]

@@ -42,13 +42,3 @@ class SignInView(LoginView):
     template_name = 'account/login.html'
 
     redirect_to = 'account/successful_registration.html'
-
-
-class ChangePasswordView(View):
-    def post(self, request):
-        pass
-
-
-class ForgotPasswordView(View):
-    def post(self, request):
-        pass

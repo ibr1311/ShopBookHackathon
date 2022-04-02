@@ -14,6 +14,9 @@ urlpatterns = [
     path('home/createbook/', create_book, name='create_book_url'),
     path('search/', views.post_search, name='books_search'),
     path('', redirect_blog),
+    path('cart/', include('order.urls', namespace='order')),
+
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
