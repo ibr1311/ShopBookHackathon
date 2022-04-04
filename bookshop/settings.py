@@ -83,8 +83,8 @@ WSGI_APPLICATION = 'bookshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'book_shop_d',
-        'USER': 'macbook',
+        'NAME': 'bookshop111',
+        'USER': 'meerim',
         'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': 5432
@@ -142,14 +142,16 @@ MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
-
+LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'toktobekov7595@gmail.com'
-EMAIL_HOST_PASSWORD = '460622123Beka'
+EMAIL_HOST_PASSWORD = '46062222beka '
 
 
 CART_SESSION_ID = 'cart'
+
+AUTH_USER_MODEL = 'account.User'

@@ -15,7 +15,7 @@ from order.forms import CartAddBookForm
 
 def genre_view(request):
     genres = Genre.objects.all()
-    paginate_by = 3
+    paginate_by = 2
     return render(request, 'books/main_page.html', {'genres': genres})
 def books_list(request, slug):
     books = Book.objects.filter(genre__slug=slug)
@@ -31,7 +31,6 @@ def books_list(request, slug):
 
     context = {
         'books': books,
-
     }
 
     return render(request, 'books/books_list.html', context)
@@ -91,7 +90,7 @@ def add_comment(request, pk):
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=book)
         if form.is_valid():
-            name = request.user.username
+            name = request.user.first_name
             body = form.cleaned_data['comment_body']
             c = Comment(book=book, commenter_name=name, comment_body=body, date_added=datetime.now())
             c.save()

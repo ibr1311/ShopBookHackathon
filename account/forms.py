@@ -29,5 +29,4 @@ class RegistrationForm(forms.Form):
         data = self.cleaned_data
         user = User.objects.create_user(**data)
         user.set_activation_code()
-        user.send_activation_mail(
-        )
+        user.send_activation_mail()
