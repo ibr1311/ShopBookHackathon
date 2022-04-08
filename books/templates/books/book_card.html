@@ -1,0 +1,10 @@
+<div class="product-inner">
+    <div class="product-wrap">
+      <img src="{{ book.image.url }}">
+    </div>
+    <div class="product-info">
+      <h3 class="product-title"><a href="{% url 'books_detail_url' book.id %}">{{ book.title }}</a></h3>
+      <h3 class="product-author">{{ book.author }}</h3>
+      <span class="price">{{ book.price }} руб.</span>
+    </div>
+  </div>

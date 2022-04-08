@@ -15,9 +15,9 @@ urlpatterns = [
     path('search/', views.post_search, name='books_search'),
     path('', redirect_blog),
     path('cart/', include('order.urls', namespace='order')),
-
-
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -8,38 +8,13 @@ Book Shop
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-
-
-        <div class="row">
-
-            {% if books %}
-
-            {% for book in books %}
-
-                <div class="row p-5">
-
-                    <div class="card m-3 p-2" style="width: 25rem; height: 38rem; box-shadow: 4px 4px #f19568; border-radius: 25px 15px;">
-                          {% if book.image %}
-                        <center><img src="{{ book.image.url }}" style="height: 360px; width: 260px;"  class="card-img-top" alt="{{ book.title }}"></center>
-                          {% endif %}
-                        <div class="card-body">
-                            <h4 style="font-size: 14px;" class="card-title mt-1"><a href="{% url 'books_detail_url' book.id %}">{{ book.title }}</a></h4>
-                            <h3 style="color: rgb(16, 52, 107)" class="card-subtitle mt-1">${{ book.price }}</h3>
-                            <hr>
-                            <p style="font-size: 13px;" class="btn btn-light"><b>{{ book.author.name }} {{ book.author.last_name }}</b></p>
-                        </div>
-
-        </div>
-    </div>
-               </div>
-    </div>
-
-            {% endfor %}
-
-            {% else %}
-                 <p>No Books </p>
-            {% endif %}
+   {% if books %}
+     {% for book in books %}
+       {% include 'books/book_card.html' %}
+     {% endfor %}
+   {% else %}
+     <p>No books</p>
+   {% endif %}
 
     </li>
 

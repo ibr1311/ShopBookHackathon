@@ -1,11 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Вы успешно зарегистрировались</title>
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
 </head>
 <body>
-    <h1>Спасибо за регистрацию на нашем сайте!</h1>
-    <p>Вам на почту выслано письмо для подтверждения.</p>
+    <div class="success-registration">
+        <h1 class="success">Спасибо за регистрацию на нашем сайте!</h1>
+        <p class="success-p">Вам на почту выслано письмо для подтверждения.</p>
+    </div>
 </body>
 </html>

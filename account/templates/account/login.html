@@ -1,17 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Вход на сайт</title>
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
 </head>
 <body>
-    <h1>Вход на сайт</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Войти</button>
+    <div class="registration-form">
+        <h1>Вход на сайт</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Войти</button>
 
-    </form>
-    <h4>Если у Вас нет аккаунта, Вы можете <a href="{% url 'registration' %}">зарегистрироваться</a></h4>
+        </form>
+        <h4 class="register-account">Если у Вас нет аккаунта, Вы можете <a href="{% url 'registration' %}">зарегистрироваться</a></h4>
+    </div>
 </body>
 </html>
