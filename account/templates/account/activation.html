@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,9 @@
     <title>Активация</title>
 </head>
 <body>
-    <h1>Ваш аккаунт успешно активирован</h1>
-    <p>Вы можете <a href="{% url 'signin' %}">войти на сайт</a></p>
+    <div class="success-registration">
+        <h1 class="success">Ваш аккаунт успешно активирован</h1>
+        <p class="success-p">Вы можете <a href="{% url 'signin' %}">войти на сайт</a></p>
+    </div>
 </body>
 </html>
